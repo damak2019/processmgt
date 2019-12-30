@@ -49,11 +49,21 @@ public class MethodResource {
 
     @RequestMapping(method = RequestMethod.GET, path = {"/methods/{name}/pname/{pname}/ptype/{ptype}/pfollow/{pfollow}"})
 
-    public List<ProcessDTO> listProcessByProjectProcess(@PathVariable("name") String name,
+    public List<ProcessDTO> listProcessByMappingNameAndProjectProcess(@PathVariable("name") String name,
                                                         @PathVariable("pname") String pname,
                                                         @PathVariable("ptype") String ptype,
                                                         @PathVariable("pfollow") String pfollow) {
-        return MethodAdapter.adaptToProcessListDTO(this.methodService.listAllByNameAndProcess(name,pname,ptype,pfollow));
+        return MethodAdapter.adaptToProcessListDTO(this.methodService.listAllProccessByMappedNameAndProcess(name,pname,ptype,pfollow));
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = {"/methods/{name}/ptype/{ptype}/pfollow/{pfollow}"})
+
+    public List<ProcessDTO> listProccessByMappedNameAndProcessTypeFollow  (@PathVariable("name") String name,
+                                                                    //  @PathVariable("pname") String pname,
+                                                                      @PathVariable("ptype") String ptype,
+                                                                      @PathVariable("pfollow") String pfollow) {
+        return MethodAdapter.adaptToProcessListDTO(this.methodService.listAllProccessByMappedNameAndProcessTypeFollow(name,ptype,pfollow));
 
     }
 

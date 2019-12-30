@@ -1,10 +1,7 @@
 package com.bnpparibas.ism.processmgt.application;
 
-import com.bnpparibas.ism.processmgt.domain.FollowUP;
-import com.bnpparibas.ism.processmgt.domain.Method;
-import com.bnpparibas.ism.processmgt.domain.MethodRepository;
+import com.bnpparibas.ism.processmgt.domain.*;
 import com.bnpparibas.ism.processmgt.domain.Process;
-import com.bnpparibas.ism.processmgt.domain.ProcessType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,20 +33,50 @@ public class MethodService {
         return this.methodRepository.findByName(name);
 
     }
-    public List<Process> listAllByNameAndProcess(String name,   String displayName,   String processType,  String followUP) {
+
+    public List<Process> listAllProccessByMethNameAndProcess(String name,   String displayName,   String processType,  String followUP) {
         List<Method> allMethods =   this.methodRepository.findByName(name);
         List<Process> processList = new ArrayList<Process>();
 
         for (Method method : allMethods) {
-
             processList.addAll(method.getProcesses());
         }
+        return  getFilterdProcess(  processList,   displayName,     processType,    followUP );
+    }
 
+    public List<Process> listAllProccessByMappedNameAndProcess(String mappingName,   String displayName,   String processType,  String followUP) {
+        List<Method>  allMethods=   this.methodRepository.findAll();
+        List<Process> processList = new ArrayList<Process>();
+
+        for (Method method : allMethods) {
+            if ( isMappedMethod(method,mappingName) ){
+                processList.addAll(method.getProcesses());
+            }
+        }
         return  getFilterdProcess(  processList,   displayName,     processType,    followUP );
 
+    }
+    public List<Process> listAllProccessByMappedNameAndProcessTypeFollow(String mappingName ,   String processType,  String followUP) {
+        List<Method>  allMethods=   this.methodRepository.findAll();
+        List<Process> processList = new ArrayList<Process>();
 
+        for (Method method : allMethods) {
+            if ( isMappedMethod(method,mappingName) ){
+                processList.addAll(method.getProcesses());
+            }
+        }
+
+        return  getFilterdProcessByTypeAndFollow(  processList,     processType,    followUP );
 
     }
+
+    private boolean isMappedMethod(Method method, String mappedName) {
+        List<MethodMapping>  methodMappingList =  method.getMethodMappings();
+
+        return (!( methodMappingList.stream().filter(mapping -> {return (mapping.getName().equals(mappedName));}).collect(Collectors.toList()).isEmpty())) ;
+    }
+
+
 
     private List<Process> getFilterdProcess(List<Process> processList, String displayName,   String processType,  String followUP ){
 
@@ -59,6 +86,19 @@ public class MethodService {
                                                                 && (process.getProcessType().toString().equals(processType))
                                                                 && (process.getFollowUP().toString().equals(followUP)) ); }).
                                             collect(Collectors.toList());
+
+        return  filterdProcess;
+
+    }
+    private List<Process> getFilterdProcessByTypeAndFollow(List<Process> processList,    String processType,  String followUP ){
+
+        List<Process> filterdProcess  =   processList.
+                stream().
+                filter(process -> {  return (
+                        //(process.getDisplayName().equals(displayName)) &&
+                        (process.getProcessType().toString().equals(processType)) &&
+                        (process.getFollowUP().toString().equals(followUP)) ); }).
+                collect(Collectors.toList());
 
         return  filterdProcess;
 

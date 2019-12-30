@@ -10,13 +10,18 @@ public class Method {
 
     private List<Process> processes = new ArrayList<>();
 
+
+
+    private List<MethodMapping> methodMappings = new ArrayList<>();
+
     public Method() {
     }
 
-    public Method(Long id, String name , List<Process> myProcesses) {
+    public Method(Long id, String name , List<Process> myProcesses,List<MethodMapping> myMethodMappings) {
         this.id = id;
         this.name = name;
        this.processes = myProcesses;
+       this.methodMappings = myMethodMappings;
     }
 
 
@@ -24,6 +29,7 @@ public class Method {
        // this.id = methodWithNewInformation.getId();  // IL ne faut pas
         this.name = methodWithNewInformation.getName();
         this.processes = methodWithNewInformation.getProcesses();
+        this.methodMappings = methodWithNewInformation.getMethodMappings();
     }
 
 
@@ -35,6 +41,9 @@ public class Method {
     }
     public List<Process> getProcesses() {
         return processes;
+    }
+    public List<MethodMapping> getMethodMappings() {
+        return methodMappings;
     }
 
 

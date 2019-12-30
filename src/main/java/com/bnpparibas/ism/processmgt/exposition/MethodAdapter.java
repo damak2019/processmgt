@@ -1,9 +1,7 @@
 package com.bnpparibas.ism.processmgt.exposition;
 
-import com.bnpparibas.ism.processmgt.domain.Artifact;
-import com.bnpparibas.ism.processmgt.domain.Method;
+import com.bnpparibas.ism.processmgt.domain.*;
 import com.bnpparibas.ism.processmgt.domain.Process;
-import com.bnpparibas.ism.processmgt.domain.ProcessActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +19,26 @@ public class MethodAdapter {
         return methods.stream().map(method -> adaptToMethodDTO(method)).collect(Collectors.toList());
     }
     public static MethodDTO adaptToMethodDTO(Method method) {
-        return  new MethodDTO(method.getName(),MethodAdapter.adaptToProcessListDTO(method.getProcesses()) );
+
+        return  new MethodDTO(method.getName(),MethodAdapter.adaptToProcessListDTO(method.getProcesses()), MethodAdapter.adaptToMethodMappingListDTO(method.getMethodMappings()));
     }
     public static List<ProcessDTO> adaptToProcessListDTO(List<Process> processes) {
         return processes.stream().map(process -> adaptToProcessDTO(process)).collect(Collectors.toList());
+    }
+    public static List<MethodMappingDTO> adaptToMethodMappingListDTO(List<MethodMapping> methodMappings) {
+        return methodMappings.stream().map(methodMapping -> adaptToMethodMappingDTO(methodMapping)).collect(Collectors.toList());
     }
 
     public static ProcessDTO adaptToProcessDTO(Process process) {
 
         List<ProcessActivityDTO> processActivityDTOList = adaptToProcessActivityListDTO (process.getProcessActivities());
         return  new ProcessDTO(process.getDisplayName(),process.getProcessType(),process.getFollowUP() ,processActivityDTOList);
+
+    }
+    public static MethodMappingDTO adaptToMethodMappingDTO(MethodMapping methodMapping) {
+
+        //List<ProcessActivityDTO> processActivityDTOList = adaptToProcessActivityListDTO (process.getProcessActivities());
+        return  new MethodMappingDTO(methodMapping.getName());
 
     }
     public static List<ProcessActivityDTO>  adaptToProcessActivityListDTO(List<ProcessActivity> processesActivityList) {
@@ -51,16 +59,26 @@ public class MethodAdapter {
 
     public static Method transformToMethod(MethodDTO methodDTO) {
 
-        return new Method(null,
+        return new Method(
+                null,
                 methodDTO.name,
-                methodDTO.processDTOList.stream().map(MethodAdapter::transformToProcess
-                ). collect(Collectors.toList()) );
+                methodDTO.processDTOList.stream().map(MethodAdapter::transformToProcess). collect(Collectors.toList()),
+                methodDTO.methodMappingDTOList.stream().map(MethodAdapter::transformToMethodMapping).collect(Collectors.toList())
+                );
     }
 
     public static Process transformToProcess(ProcessDTO processDTO) {
 
         List<ProcessActivity> processActivities = transformToProcessActivityList(  processDTO.processActivityDTOList );
         return new Process(null, processDTO.displayName, processDTO.processType, processDTO.followUP, processActivities);
+    }
+
+    public static MethodMapping transformToMethodMapping(MethodMappingDTO methodMappingDTO) {
+
+//        List<ProcessActivity> processActivities = transformToProcessActivityList(  processDTO.processActivityDTOList );
+//        return new Process(null, processDTO.displayName, processDTO.processType, processDTO.followUP, processActivities);
+
+        return  new MethodMapping(null,methodMappingDTO.name );
     }
 
 

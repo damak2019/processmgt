@@ -1,6 +1,6 @@
 package com.bnpparibas.ism.processmgt.infrastructure;
 
-import com.bnpparibas.ism.processmgt.domain.MethodeMapping;
+import com.bnpparibas.ism.processmgt.domain.MethodMapping;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,12 +22,12 @@ public class MethodeMappingJPA {
     public MethodeMappingJPA() {
     }
 
-    public MethodeMappingJPA(MethodeMapping methodeMapping) {
+    public MethodeMappingJPA(MethodMapping methodeMapping) {
         this.id = methodeMapping.getId();
         this.name = methodeMapping.getName();
     }
-    public MethodeMapping toMethodMapping() {
-        return new MethodeMapping(this.id, this.name);
+    public MethodMapping toMethodMapping() {
+        return new MethodMapping(this.id, this.name);
     }
 
 

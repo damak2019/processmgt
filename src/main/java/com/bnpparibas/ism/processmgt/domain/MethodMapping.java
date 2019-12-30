@@ -1,19 +1,19 @@
 package com.bnpparibas.ism.processmgt.domain;
 
-public class MethodeMapping {
+public class MethodMapping {
     private Long id;
     private String name;
 
 
-    public MethodeMapping() {
+    public MethodMapping() {
     }
 
-    public MethodeMapping(Long id, String name) {
+    public MethodMapping(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public void update (MethodeMapping methodMappingWithNewInformation){
+    public void update (MethodMapping methodMappingWithNewInformation){
         // this.id = methodWithNewInformation.getId();
         this.name = methodMappingWithNewInformation.getName();
     }

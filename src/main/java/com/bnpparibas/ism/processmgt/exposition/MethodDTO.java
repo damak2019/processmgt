@@ -10,11 +10,15 @@ public class MethodDTO {
     @JsonProperty
     List<ProcessDTO> processDTOList;
 
+    @JsonProperty
+    List<MethodMappingDTO> methodMappingDTOList;
+
     public MethodDTO() {
     }
 
-    public MethodDTO(String name, List<ProcessDTO> myProcessDTOList ) {
+    public MethodDTO(String name, List<ProcessDTO> myProcessDTOList , List<MethodMappingDTO> myMethodMappingDTOList) {
         this.name = name;
         this.processDTOList = myProcessDTOList;
+        this.methodMappingDTOList = myMethodMappingDTOList;
     }
 }

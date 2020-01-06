@@ -56,7 +56,7 @@ public class MethodResource {
         return MethodAdapter.adaptToProcessListDTO(this.methodService.listAllProccessByMappedNameAndProcess(name,pname,ptype,pfollow));
 
     }
-
+//  call in front return this.http.get(`${this.baseUrl}/methods/${name}/ptype/${ptype}/pfollow/${pfollow}`)
     @RequestMapping(method = RequestMethod.GET, path = {"/methods/{name}/ptype/{ptype}/pfollow/{pfollow}"})
 
     public List<ProcessDTO> listProccessByMappedNameAndProcessTypeFollow  (@PathVariable("name") String name,
@@ -77,6 +77,40 @@ public class MethodResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeMethod(@PathVariable("methodId") Long methodId) {
         this.methodService.remove(methodId);
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, path = {"/methods/{methodId}/methodMappings"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addMappingToMethod(@PathVariable("methodId") Long methodId, @RequestBody  MethodMappingDTO methodMappingDTO) {
+        this.methodService.addMethodMapping(methodId, MethodAdapter.transformToMethodMapping(methodMappingDTO));
+
+    }
+
+
+// call in front  return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/addProcess`, processDTO);
+    @RequestMapping(method = RequestMethod.POST, path = {"/methods/{methodId}/addProcess"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addProcessToMethod(@PathVariable("methodId") Long methodId, @RequestBody  ProcessDTO processDTO) {
+        this.methodService.addProcess(methodId, MethodAdapter.transformToProcess(processDTO));
+
+    }
+// call in front return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/process/${processId}/addProcessActivity`, processActivityDTO);
+    @RequestMapping(method = RequestMethod.POST, path = {"/methods/{methodId}/process/{processId}/addProcessActivity"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addProcessActivityToMethod(@PathVariable("methodId") Long methodId, @PathVariable("processId") Long processId, @RequestBody  ProcessActivityDTO processActivityDTO) {
+        this.methodService.addProcessActivity(methodId, processId, MethodAdapter.transformToProcessActivity(processActivityDTO));
+        System.out.println("calling addProcessActivityToMethod");
+
+    }
+    // call in front return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/process/${processID}/activity/${activityID}/addArtifact`, artifactDTO);
+
+    @RequestMapping(method = RequestMethod.POST, path = {"/methods/{methodId}/process/{processId}/activity/{activityID}/addArtifact"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addArtifactToMethod(@PathVariable("methodId") Long methodId, @PathVariable("processId") Long processId, @PathVariable("activityID") Long activityID, @RequestBody  ArtifactDTO artifactDTO) {
+        this.methodService.addArtifactToActivity(methodId, processId, activityID, MethodAdapter.transformToArtifact(artifactDTO));
+        System.out.println("calling addProcessActivityToMethod");
+
     }
 
 

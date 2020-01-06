@@ -2,6 +2,7 @@ package com.bnpparibas.ism.processmgt.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Method {
 
@@ -45,6 +46,43 @@ public class Method {
     public List<MethodMapping> getMethodMappings() {
         return methodMappings;
     }
+
+
+
+    public void addMethodMapping(MethodMapping methodMapping) {
+
+        if(getMethodMappings()==null){
+            this.methodMappings = new ArrayList<>();
+        }
+        getMethodMappings().add(methodMapping);
+      //  methodMapping.setMethod(this);
+
+    }
+
+    public void addProcess(Process process) {
+
+        if(getProcesses()==null){
+            this.processes = new ArrayList<>();
+        }
+        getProcesses().add(process);
+    }
+
+    public  Process getProcessById (Long processId) {
+        Process process = null;
+        List<Process>  processes = this.getProcesses().
+                stream().
+                filter(p -> {
+                    System.out.println("p.getId()" + p.getId());
+                    System.out.println("equal " +  (p.getId().intValue()  == processId.intValue() ));
+                    return (   (p.getId().intValue() == processId.intValue()));
+                }).
+                collect(Collectors.toList());
+        if (! (processes == null || processes.isEmpty()) ) {
+            process = processes.get(0);
+        }
+        return process;
+    }
+
 
 
 

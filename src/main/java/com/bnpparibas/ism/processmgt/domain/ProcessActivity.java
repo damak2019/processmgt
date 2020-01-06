@@ -1,12 +1,14 @@
 package com.bnpparibas.ism.processmgt.domain;
 
-import java.util.List;
+
+import java.util.HashSet;
+
 import java.util.Set;
 
 public class ProcessActivity {
     private Long id;
     private String name;
-    private Set<Artifact> artifacts;
+    private Set<Artifact> artifacts = new HashSet<>();
 
 
     public ProcessActivity() {
@@ -35,6 +37,12 @@ public class ProcessActivity {
         return artifacts;
     }
 
+    public void addArtifact(Artifact artifact) {
 
+        if(getArtifacts()==null){
+            this.artifacts = new HashSet<>()  ;
+        }
+        getArtifacts().add(artifact);
+    }
 
 }

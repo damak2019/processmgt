@@ -4,6 +4,7 @@ import com.bnpparibas.ism.processmgt.domain.*;
 import com.bnpparibas.ism.processmgt.domain.Process;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class MethodAdapter {
     }
     public static MethodDTO adaptToMethodDTO(Method method) {
 
-        return  new MethodDTO(method.getName(),MethodAdapter.adaptToProcessListDTO(method.getProcesses()), MethodAdapter.adaptToMethodMappingListDTO(method.getMethodMappings()));
+        return  new MethodDTO(method.getId(),method.getName(),MethodAdapter.adaptToProcessListDTO(method.getProcesses()), MethodAdapter.adaptToMethodMappingListDTO(method.getMethodMappings()));
     }
     public static List<ProcessDTO> adaptToProcessListDTO(List<Process> processes) {
         return processes.stream().map(process -> adaptToProcessDTO(process)).collect(Collectors.toList());
@@ -32,7 +33,7 @@ public class MethodAdapter {
     public static ProcessDTO adaptToProcessDTO(Process process) {
 
         List<ProcessActivityDTO> processActivityDTOList = adaptToProcessActivityListDTO (process.getProcessActivities());
-        return  new ProcessDTO(process.getDisplayName(),process.getProcessType(),process.getFollowUP() ,processActivityDTOList);
+        return  new ProcessDTO(process.getId(),process.getDisplayName(),process.getProcessType(),process.getFollowUP() ,processActivityDTOList);
 
     }
     public static MethodMappingDTO adaptToMethodMappingDTO(MethodMapping methodMapping) {
@@ -47,7 +48,7 @@ public class MethodAdapter {
     }
     public static ProcessActivityDTO adaptToProcessActivityDTO(ProcessActivity processActivity) {
         List<ArtifactDTO> artifactDTOList = adaptToArtifactListDTO (processActivity.getArtifacts());
-        return  new ProcessActivityDTO( processActivity.getName(),artifactDTOList);
+        return  new ProcessActivityDTO(processActivity.getId(), processActivity.getName(),artifactDTOList);
     }
 
     private static List<ArtifactDTO> adaptToArtifactListDTO(Set<Artifact> artifacts) {
@@ -59,11 +60,20 @@ public class MethodAdapter {
 
     public static Method transformToMethod(MethodDTO methodDTO) {
 
+        List<Process>  proccesList   = null;
+        proccesList = transformToProcessList( methodDTO.processDTOList);
+
+        List<MethodMapping>  methodMappingList   = null;
+        methodMappingList = transformToMethodMappingsList( methodDTO.methodMappingDTOList);
+
         return new Method(
-                null,
+                //null,
+                methodDTO.id,
                 methodDTO.name,
-                methodDTO.processDTOList.stream().map(MethodAdapter::transformToProcess). collect(Collectors.toList()),
-                methodDTO.methodMappingDTOList.stream().map(MethodAdapter::transformToMethodMapping).collect(Collectors.toList())
+                proccesList,
+             //   methodDTO.processDTOList.stream().map(MethodAdapter::transformToProcess).collect(Collectors.toList()),
+                methodMappingList
+                //methodDTO.methodMappingDTOList.stream().map(MethodAdapter::transformToMethodMapping).collect(Collectors.toList())
                 );
     }
 
@@ -80,7 +90,13 @@ public class MethodAdapter {
 
         return  new MethodMapping(null,methodMappingDTO.name );
     }
+    public static List<MethodMapping> transformToMethodMappingsList(List<MethodMappingDTO> methodMappingDTOList) {
 
+        if(methodMappingDTOList == null) {
+            return new ArrayList<>();
+        }
+        return methodMappingDTOList.stream().map(MethodAdapter::transformToMethodMapping).collect(Collectors.toList());
+    }
 
     public static List<Process> transformToProcessList(List<ProcessDTO> processDTOList) {
 
@@ -95,9 +111,9 @@ public class MethodAdapter {
 
 
     private static List<ProcessActivity> transformToProcessActivityList(List<ProcessActivityDTO> processActivityDTOList) {
-        /*  if(processActivityDTOList == null) {
+         if(processActivityDTOList == null) {
             return new ArrayList<>();
-        }*/
+        }
         return processActivityDTOList.stream().map(MethodAdapter::transformToProcessActivity).collect(Collectors.toList());
     }
 
@@ -109,6 +125,9 @@ public class MethodAdapter {
     }
 
     private static Set<Artifact> transformToArtifactset(List<ArtifactDTO> artifactDTOList) {
+        if(artifactDTOList == null) {
+            return  Collections.emptySet();
+        }
 
        return artifactDTOList.stream().map(artifactDTO -> transformToArtifact(artifactDTO) ).collect(Collectors.toSet());
     }

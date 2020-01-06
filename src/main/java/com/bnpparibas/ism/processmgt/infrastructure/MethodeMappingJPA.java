@@ -2,10 +2,7 @@ package com.bnpparibas.ism.processmgt.infrastructure;
 
 import com.bnpparibas.ism.processmgt.domain.MethodMapping;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "METHOD_MAPPING")
 public class MethodeMappingJPA {
@@ -18,6 +15,8 @@ public class MethodeMappingJPA {
     @Column(name = "NAME")
     private String name;
 
+ /*   @ManyToOne
+    private MethodJPA method;*/
 
     public MethodeMappingJPA() {
     }
@@ -25,6 +24,7 @@ public class MethodeMappingJPA {
     public MethodeMappingJPA(MethodMapping methodeMapping) {
         this.id = methodeMapping.getId();
         this.name = methodeMapping.getName();
+
     }
     public MethodMapping toMethodMapping() {
         return new MethodMapping(this.id, this.name);

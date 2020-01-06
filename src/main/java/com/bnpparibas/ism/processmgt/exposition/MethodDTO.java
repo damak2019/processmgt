@@ -6,6 +6,8 @@ import java.util.List;
 
 public class MethodDTO {
     @JsonProperty
+    Long id;
+    @JsonProperty
      String name;
     @JsonProperty
     List<ProcessDTO> processDTOList;
@@ -16,9 +18,12 @@ public class MethodDTO {
     public MethodDTO() {
     }
 
-    public MethodDTO(String name, List<ProcessDTO> myProcessDTOList , List<MethodMappingDTO> myMethodMappingDTOList) {
+    public MethodDTO(Long id, String name, List<ProcessDTO> processDTOList, List<MethodMappingDTO> methodMappingDTOList) {
+        this.id = id;
         this.name = name;
-        this.processDTOList = myProcessDTOList;
-        this.methodMappingDTOList = myMethodMappingDTOList;
+        this.processDTOList = processDTOList;
+        this.methodMappingDTOList = methodMappingDTOList;
     }
+
+
 }

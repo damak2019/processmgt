@@ -10,6 +10,8 @@ import java.util.List;
 
 public class ProcessDTO {
     @JsonProperty
+    Long id;
+    @JsonProperty
      String displayName;
     @JsonProperty
      ProcessType processType;
@@ -19,11 +21,18 @@ public class ProcessDTO {
     @JsonProperty
     List<ProcessActivityDTO> processActivityDTOList;
 
-
-    public ProcessDTO(String displayName, ProcessType processType, FollowUP followUP,List<ProcessActivityDTO> processActivityDTOList) {
+    public ProcessDTO(Long id, String displayName, ProcessType processType, FollowUP followUP, List<ProcessActivityDTO> processActivityDTOList) {
+        this.id = id;
         this.displayName = displayName;
         this.processType = processType;
         this.followUP = followUP;
         this.processActivityDTOList = processActivityDTOList;
     }
+
+/*    public ProcessDTO(String displayName, ProcessType processType, FollowUP followUP, List<ProcessActivityDTO> processActivityDTOList) {
+        this.displayName = displayName;
+        this.processType = processType;
+        this.followUP = followUP;
+        this.processActivityDTOList = processActivityDTOList;
+    }*/
 }

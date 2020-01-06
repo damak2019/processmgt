@@ -24,7 +24,7 @@ public class MethodJPA {
     private List<ProcessJPA> processJPAS;
 
 
-
+   // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "method")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="METHOD_ID", referencedColumnName = "ID")
     private List<MethodeMappingJPA> methodMappingJPAS;

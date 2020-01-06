@@ -3,6 +3,7 @@ package com.bnpparibas.ism.processmgt.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Process {
     private Long id;
@@ -48,6 +49,26 @@ public class Process {
 
     public List<ProcessActivity> getProcessActivities() {
         return processActivities;
+    }
+
+    public void addProcessActivity(ProcessActivity processActivity) {
+
+        if(getProcessActivities()==null){
+            this.processActivities = new ArrayList<>();
+        }
+        getProcessActivities().add(processActivity);
+    }
+
+    public  ProcessActivity getProcessActivityById (Long activityId) {
+        ProcessActivity processActivity = null;
+        List<ProcessActivity>  processActivities = this.getProcessActivities().
+                stream().
+                filter(act -> {  return (   (act.getId().intValue() == activityId.intValue())); }).
+                collect(Collectors.toList());
+        if (! (processActivities == null || processActivities.isEmpty()) ) {
+            processActivity = processActivities.get(0);
+        }
+        return processActivity;
     }
 
 

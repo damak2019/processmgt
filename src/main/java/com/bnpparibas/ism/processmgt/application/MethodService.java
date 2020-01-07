@@ -118,23 +118,33 @@ public class MethodService {
     }
 
 
-    public void addMethodMapping(Long methodId, MethodMapping  methodMapping) {
+/*    public void addMethodMapping(Long methodId, MethodMapping  methodMapping) {
         Method method = obtain(methodId);
 
         method.addMethodMapping(methodMapping);
 
         this.methodRepository.save(method);
+    }*/
+
+    public void addMethodMapping(Long methodId, MethodMapping  methodMapping) {
+
+        this.methodRepository.addMethodMapping(methodId,methodMapping);
     }
 
-    public void addProcess(Long methodId, Process process) {
+  /*  public void addProcess(Long methodId, Process process) {
         Method method = obtain(methodId);
 
         method.addProcess(process);
 
         this.methodRepository.save(method);
 
-    }
-    public void addProcessActivity(Long methodId, Long processId, ProcessActivity processActivity) {
+    }*/
+  public void addProcess(Long methodId, Process process) {
+
+      this.methodRepository.addProcees(methodId,process);
+
+  }
+  /*  public void addProcessActivity(Long methodId, Long processId, ProcessActivity processActivity) {
         Method method = obtain(methodId);
 
         Process process = method.getProcessById(processId);
@@ -144,6 +154,12 @@ public class MethodService {
             process.addProcessActivity(processActivity);
             this.methodRepository.save(method);
         }
+
+    }*/
+    public void addProcessActivity(Long methodId, Long processId, ProcessActivity processActivity) {
+
+            this.methodRepository.addProceesActivity(methodId,processId, processActivity);
+
 
     }
 
@@ -164,6 +180,14 @@ public class MethodService {
 
 
     public void addArtifactToActivity(Long methodId, Long processId, Long activityID, Artifact artifact) {
+
+                this.methodRepository.addArtifactToActivity(methodId,processId, activityID, artifact);
+
+
+        }
+
+
+/*    public void addArtifactToActivity(Long methodId, Long processId, Long activityID, Artifact artifact) {
         Method method = obtain(methodId);
         ProcessActivity activity;
 
@@ -177,6 +201,6 @@ public class MethodService {
 
         }
 
-    }
+    }*/
 }
 

@@ -2,25 +2,38 @@ package com.bnpparibas.ism.processmgt.infrastructure;
 
 import com.bnpparibas.ism.processmgt.domain.Artifact;
 import com.bnpparibas.ism.processmgt.domain.ProcessActivity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@UUID")
 @Entity(name = "PROCESS_ACTIVITY")
 public class ProcessActivityJPA {
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID",columnDefinition = "serial")
     private Long id;
 
     @Column(name = "NAME")
     private String name;
 
+    @ManyToOne
+    private ProcessJPA process;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    public ProcessJPA getProcess() {
+        return process;
+    }
+
+    public void setProcess(ProcessJPA process) {
+        this.process = process;
+    }
+
+    //cascade = CascadeType.ALL
+   // @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(  cascade = CascadeType.ALL)
     @JoinTable(
             name = "ACTIVITY_HAS_ARTIFACT",
             joinColumns = @JoinColumn(name = "PROCESS_ACTIVITY_ID"),
@@ -37,11 +50,15 @@ public class ProcessActivityJPA {
         this.id = processActivity.getId();
         this.name = processActivity.getName();
         this.artifactJPAs = fromArtefactSetToArtifactJPASet(processActivity.getArtifacts());
+        this.artifactJPAs.forEach(art->{
+            art.getProcessActivityJPAs().add(this);
+        });
 
     }
 
     private Set<ArtifactJPA> fromArtefactSetToArtifactJPASet(Set<Artifact> artifacts) {
-        return artifacts.stream().map(artifact -> new ArtifactJPA(artifact)).collect(Collectors.toSet());
+        return artifacts.stream().map(artifact ->  new ArtifactJPA(artifact)).collect(Collectors.toSet());
+       // return artifacts.stream().map(artifact -> new ArtifactJPA(artifact)).collect(Collectors.toSet());
     }
 
 
@@ -66,6 +83,17 @@ public class ProcessActivityJPA {
     public Set<ArtifactJPA> getArtifactJPASList() {
         return artifactJPAs;
     }
+
+    public void addNewArtifact(ArtifactJPA artifactJPA) {
+
+        if(getArtifactJPASList()==null){
+            this.artifactJPAs = new HashSet<>();
+        }
+        getArtifactJPASList().add(artifactJPA);
+        artifactJPA.getProcessActivityJPAs().add(this);
+    }
+
+
 
 
 }

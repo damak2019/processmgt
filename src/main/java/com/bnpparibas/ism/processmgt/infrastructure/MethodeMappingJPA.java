@@ -8,15 +8,15 @@ import javax.persistence.*;
 public class MethodeMappingJPA {
 
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID",columnDefinition = "serial")
     private Long id;
 
     @Column(name = "NAME")
     private String name;
 
- /*   @ManyToOne
-    private MethodJPA method;*/
+    @ManyToOne
+    private MethodJPA method;
 
     public MethodeMappingJPA() {
     }
@@ -30,6 +30,13 @@ public class MethodeMappingJPA {
         return new MethodMapping(this.id, this.name);
     }
 
+    public MethodJPA getMethod() {
+        return method;
+    }
+
+    public void setMethod(MethodJPA method) {
+        this.method = method;
+    }
 
     public Long getId() {
         return id;

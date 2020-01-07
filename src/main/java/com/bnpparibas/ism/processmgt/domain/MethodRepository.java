@@ -10,5 +10,11 @@ public interface MethodRepository {
 
     List<Method> findByName(String name);
 
+    void addMethodMapping(Long idMethod, MethodMapping methodMapping);
+    void addProcees(Long idMethod, Process process);
+    void addProceesActivity(Long idMethod, Long idProcess,ProcessActivity processActivity);
+    void addArtifactToActivity(Long methodId, Long processId, Long activityID, Artifact artifact) ;
+
+
    // List<Process> findProcessByDisplayName(String displayName);
 }

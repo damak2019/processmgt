@@ -49,7 +49,7 @@ public class Method {
 
 
 
-    public void addMethodMapping(MethodMapping methodMapping) {
+/*    public void addMethodMapping(MethodMapping methodMapping) {
 
         if(getMethodMappings()==null){
             this.methodMappings = new ArrayList<>();
@@ -57,15 +57,15 @@ public class Method {
         getMethodMappings().add(methodMapping);
       //  methodMapping.setMethod(this);
 
-    }
+    }*/
 
-    public void addProcess(Process process) {
+/*    public void addProcess(Process process) {
 
         if(getProcesses()==null){
             this.processes = new ArrayList<>();
         }
         getProcesses().add(process);
-    }
+    }*/
 
     public  Process getProcessById (Long processId) {
         Process process = null;

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,16 +16,27 @@ import java.util.stream.Collectors;
 @Entity(name = "ARTIFACT")
 public class ArtifactJPA {
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID",columnDefinition = "serial")
     private Long id;
     @Column(name = "TAG")
     private String tag;
     @Column(name = "NAME")
     private String name;
 
-   /* @ManyToMany(mappedBy = "artifactJPAs")
-    private Set<ProcessActivityJPA> processActivityJPAs;*/
+    @ManyToMany(mappedBy = "artifactJPAs")
+    private Set<ProcessActivityJPA> processActivityJPAs;
+
+    public Set<ProcessActivityJPA> getProcessActivityJPAs() {
+        if (processActivityJPAs ==null) {
+            processActivityJPAs = new HashSet<>();
+        }
+        return processActivityJPAs;
+    }
+
+    public void setProcessActivityJPAs(Set<ProcessActivityJPA> processActivityJPAs) {
+        this.processActivityJPAs = processActivityJPAs;
+    }
 
     public ArtifactJPA() {
     }
@@ -66,4 +79,19 @@ public class ArtifactJPA {
    /* public Set<ProcessActivityJPA> getProcessActivityJPAs() {
         return processActivityJPAs;
     }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArtifactJPA that = (ArtifactJPA) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(tag, that.tag) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tag, name);
+    }
 }

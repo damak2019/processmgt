@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MethodDAO extends JpaRepository<MethodJPA, Long> {
 
-    List<Method> findByName(String name);
+   List<MethodJPA> findByName(String name);
 }

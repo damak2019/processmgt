@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 @Entity(name = "PROCESS")
 public class ProcessJPA {
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID",columnDefinition = "serial")
     private Long id;
     @Column(name = "DISPLAY_NAME")
     private String displayName;
@@ -25,13 +25,23 @@ public class ProcessJPA {
     private ProcessType processType;
 
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "FOLLOW_UP")
     private FollowUP followUP;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="PROCESS_ID", referencedColumnName = "ID")
+    @ManyToOne
+    private MethodJPA method;
+
+    public MethodJPA getMethod() {
+        return method;
+    }
+
+    public void setMethod(MethodJPA method) {
+        this.method = method;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,  mappedBy = "process")
+   // @JoinColumn(name="PROCESS_ID", referencedColumnName = "ID")
     private List<ProcessActivityJPA> processActivitiesJPAs = new ArrayList<>();
 
     public ProcessJPA() {
@@ -81,4 +91,26 @@ public class ProcessJPA {
     public List<ProcessActivityJPA> getProcessActivitiesJPAs() {
         return processActivitiesJPAs;
     }
+
+    public void addProcessActivity(ProcessActivityJPA processActivityJPA) {
+
+        if(getProcessActivitiesJPAs()==null){
+            this.processActivitiesJPAs = new ArrayList<>();
+        }
+        getProcessActivitiesJPAs().add(processActivityJPA);
+        processActivityJPA.setProcess(this);
+    }
+    public  ProcessActivityJPA getProcessActivityJPAById (Long activityId) {
+        ProcessActivityJPA processActivityJPA = null;
+        List<ProcessActivityJPA>  processActivitieJPAs = this.getProcessActivitiesJPAs().
+                stream().
+                filter(act -> {  return (   (act.getId().intValue() == activityId.intValue())); }).
+                collect(Collectors.toList());
+        if (! (processActivitieJPAs == null || processActivitieJPAs.isEmpty()) ) {
+            processActivityJPA = processActivitieJPAs.get(0);
+        }
+        return processActivityJPA;
+    }
+
+
 }

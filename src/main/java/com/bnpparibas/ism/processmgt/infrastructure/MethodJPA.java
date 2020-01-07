@@ -5,6 +5,7 @@ import com.bnpparibas.ism.processmgt.domain.MethodMapping;
 import com.bnpparibas.ism.processmgt.domain.Process;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,21 +13,23 @@ import java.util.stream.Collectors;
 public class MethodJPA {
 
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+  //  @GeneratedValue
+    //@Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID",columnDefinition = "serial")
     private Long id;
 
     @Column(name = "NAME")
     private String name;
 
-   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="METHOD_ID", referencedColumnName = "ID")
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "method", fetch = FetchType.LAZY)
+   // @JoinColumn(name="METHOD_ID", referencedColumnName = "ID")
     private List<ProcessJPA> processJPAS;
 
 
    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "method")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="METHOD_ID", referencedColumnName = "ID")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "method")
+    //@JoinColumn(name="METHOD_ID", referencedColumnName = "ID")
     private List<MethodeMappingJPA> methodMappingJPAS;
 
     private MethodJPA() {
@@ -37,6 +40,9 @@ public class MethodJPA {
         this.name = method.getName();
         this.processJPAS = fromProcessListToProcessJPAList(method.getProcesses());
         this.methodMappingJPAS = fromMappingListToMappingJPAList(method.getMethodMappings());
+        this.methodMappingJPAS.forEach(mm->{
+            mm.setMethod(this);
+        });
 
     }
 
@@ -81,4 +87,41 @@ public class MethodJPA {
     public List<MethodeMappingJPA> getMethodMappingJPAS() {
         return methodMappingJPAS;
     }
+
+    public void addMethodMappingJPA(MethodeMappingJPA methodeMappingJPA){
+        if(getMethodMappingJPAS()==null){
+            this.methodMappingJPAS = new ArrayList<>();
+        }
+        getMethodMappingJPAS().add(methodeMappingJPA);
+        methodeMappingJPA.setMethod(this);
+    }
+
+    public void addProcessJPA(ProcessJPA processJPA) {
+
+        if(getProcessJPAS()==null){
+            this.processJPAS = new ArrayList<>();
+        }
+        getProcessJPAS().add(processJPA);
+        processJPA.setMethod(this);
+    }
+
+    public ProcessJPA getProcessJPAById(Long idProcess) {
+        ProcessJPA processJPA = null;
+        List<ProcessJPA>  processes = this.getProcessJPAS().
+                stream().
+                filter(p -> {
+                    System.out.println("p.getId()" + p.getId());
+                   //System.out.println("equal " +  (p.getId().intValue()  == idProcess.intValue() ));
+
+                    return (   (p.getId().intValue() == idProcess.intValue()));
+
+                }).
+                collect(Collectors.toList());
+        if (! (processes == null || processes.isEmpty()) ) {
+            processJPA = processes.get(0);
+        }
+        return processJPA;
+    }
+
+
 }

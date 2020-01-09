@@ -105,7 +105,6 @@ public class MethodService {
     }
 
 
-
     public void update(Long id, Method methodWithNewInformations) {
         Method method = obtain(id);
         method.update(methodWithNewInformations);
@@ -118,89 +117,28 @@ public class MethodService {
     }
 
 
-/*    public void addMethodMapping(Long methodId, MethodMapping  methodMapping) {
-        Method method = obtain(methodId);
-
-        method.addMethodMapping(methodMapping);
-
-        this.methodRepository.save(method);
-    }*/
-
     public void addMethodMapping(Long methodId, MethodMapping  methodMapping) {
 
         this.methodRepository.addMethodMapping(methodId,methodMapping);
     }
 
-  /*  public void addProcess(Long methodId, Process process) {
-        Method method = obtain(methodId);
 
-        method.addProcess(process);
-
-        this.methodRepository.save(method);
-
-    }*/
-  public void addProcess(Long methodId, Process process) {
+    public void addProcess(Long methodId, Process process) {
 
       this.methodRepository.addProcees(methodId,process);
 
-  }
-  /*  public void addProcessActivity(Long methodId, Long processId, ProcessActivity processActivity) {
-        Method method = obtain(methodId);
+    }
 
-        Process process = method.getProcessById(processId);
-        if (process != null ){
-
-            System.out.println("getDisplayName procces  "  + process.getDisplayName());
-            process.addProcessActivity(processActivity);
-            this.methodRepository.save(method);
-        }
-
-    }*/
     public void addProcessActivity(Long methodId, Long processId, ProcessActivity processActivity) {
 
             this.methodRepository.addProceesActivity(methodId,processId, processActivity);
-
-
     }
-
-/*    private Process getProcessByIds (Long methodId, Long processId) {
-        Process process = null;
-
-        Method method = obtain(methodId);
-        List<Process>  processes = method.getProcesses().
-                stream().
-                filter(p -> {  return (   (p.getId() == processId)); }).
-                collect(Collectors.toList());
-        if (! (processes == null || processes.isEmpty()) ) {
-             process = processes.get(0);
-        }
-        return process;
-    }*/
-
 
 
     public void addArtifactToActivity(Long methodId, Long processId, Long activityID, Artifact artifact) {
 
                 this.methodRepository.addArtifactToActivity(methodId,processId, activityID, artifact);
+    }
 
-
-        }
-
-
-/*    public void addArtifactToActivity(Long methodId, Long processId, Long activityID, Artifact artifact) {
-        Method method = obtain(methodId);
-        ProcessActivity activity;
-
-        Process process = method.getProcessById(processId);
-        if (process != null ){
-            activity = process.getProcessActivityById(activityID);
-            if (activity != null) {
-                activity.addArtifact(artifact);
-                this.methodRepository.save(method);
-            }
-
-        }
-
-    }*/
 }
 

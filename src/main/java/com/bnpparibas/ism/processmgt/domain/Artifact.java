@@ -1,30 +1,31 @@
 package com.bnpparibas.ism.processmgt.domain;
 
-import java.util.Set;
+
 
 public class Artifact {
     private Long id;
     private String tag;
     private String name;
-   // private Set<ProcessActivity> processActivities;
+    /* dont include  Set<ProcessActivity> to avoid looping
+    private Set<ProcessActivity> processActivities; */
 
     public Artifact() {
     }
 
-    public Artifact(Long id, String tag, String name
-           // ,Set<ProcessActivity> processActivities
-            ) {
+    public Artifact(Long id, String tag, String name) {
         this.id = id;
         this.tag = tag;
         this.name = name;
-     //   this.processActivities = processActivities;
+        /* dont include  Set<ProcessActivity> to avoid looping
+          this.processActivities = processActivities; */
     }
 
     public void update (Artifact artifactWithNewInformation){
-        // this.id = methodWithNewInformation.getId();
+        /* do ont assign Ids in updating objects
+         this.id = methodWithNewInformation.getId(); */
         this.tag = artifactWithNewInformation.getTag();
         this.name = artifactWithNewInformation.getName();
-     //   this.processActivities = artifactWithNewInformation.getProcessActivities();
+
     }
 
 
@@ -39,7 +40,5 @@ public class Artifact {
     public String getName() {
         return name;
     }
-/*    public Set<ProcessActivity> getProcessActivities() {
-        return processActivities;
-    }*/
+
 }

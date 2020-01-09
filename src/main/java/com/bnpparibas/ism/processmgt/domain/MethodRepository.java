@@ -16,5 +16,4 @@ public interface MethodRepository {
     void addArtifactToActivity(Long methodId, Long processId, Long activityID, Artifact artifact) ;
 
 
-   // List<Process> findProcessByDisplayName(String displayName);
 }

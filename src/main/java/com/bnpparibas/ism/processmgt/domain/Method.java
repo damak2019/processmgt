@@ -11,8 +11,6 @@ public class Method {
 
     private List<Process> processes = new ArrayList<>();
 
-
-
     private List<MethodMapping> methodMappings = new ArrayList<>();
 
     public Method() {
@@ -27,7 +25,7 @@ public class Method {
 
 
     public void update (Method methodWithNewInformation){
-       // this.id = methodWithNewInformation.getId();  // IL ne faut pas
+       // this.id = methodWithNewInformation.getId();  // IL ne faut pas assigner l'Id pour l'update
         this.name = methodWithNewInformation.getName();
         this.processes = methodWithNewInformation.getProcesses();
         this.methodMappings = methodWithNewInformation.getMethodMappings();
@@ -46,26 +44,6 @@ public class Method {
     public List<MethodMapping> getMethodMappings() {
         return methodMappings;
     }
-
-
-
-/*    public void addMethodMapping(MethodMapping methodMapping) {
-
-        if(getMethodMappings()==null){
-            this.methodMappings = new ArrayList<>();
-        }
-        getMethodMappings().add(methodMapping);
-      //  methodMapping.setMethod(this);
-
-    }*/
-
-/*    public void addProcess(Process process) {
-
-        if(getProcesses()==null){
-            this.processes = new ArrayList<>();
-        }
-        getProcesses().add(process);
-    }*/
 
     public  Process getProcessById (Long processId) {
         Process process = null;

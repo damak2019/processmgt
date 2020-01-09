@@ -10,8 +10,9 @@ public class ArtifactDTO {
      String tag;
     @JsonProperty
      String name;
-/*    @JsonProperty
-     List<ProcessActivityDTO> processActivityDTOList;*/
+    // Do not add List<ProcessActivityDTO> in DTO to avoid looping
+    /*@JsonProperty
+      List<ProcessActivityDTO> processActivityDTOList;*/
 
 
     public ArtifactDTO(String tag, String name/*, List<ProcessActivityDTO> processActivityDTOList*/ ) {

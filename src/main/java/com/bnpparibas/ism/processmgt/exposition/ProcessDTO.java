@@ -29,10 +29,4 @@ public class ProcessDTO {
         this.processActivityDTOList = processActivityDTOList;
     }
 
-/*    public ProcessDTO(String displayName, ProcessType processType, FollowUP followUP, List<ProcessActivityDTO> processActivityDTOList) {
-        this.displayName = displayName;
-        this.processType = processType;
-        this.followUP = followUP;
-        this.processActivityDTOList = processActivityDTOList;
-    }*/
 }

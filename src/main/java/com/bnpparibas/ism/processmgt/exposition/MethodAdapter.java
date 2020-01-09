@@ -13,9 +13,6 @@ public class MethodAdapter {
     private MethodAdapter() {
     }
 
-
-
-
    public static List<MethodDTO> adaptToMethodDTOList(List<Method> methods) {
         return methods.stream().map(method -> adaptToMethodDTO(method)).collect(Collectors.toList());
     }
@@ -38,7 +35,6 @@ public class MethodAdapter {
     }
     public static MethodMappingDTO adaptToMethodMappingDTO(MethodMapping methodMapping) {
 
-        //List<ProcessActivityDTO> processActivityDTOList = adaptToProcessActivityListDTO (process.getProcessActivities());
         return  new MethodMappingDTO(methodMapping.getName());
 
     }
@@ -71,9 +67,7 @@ public class MethodAdapter {
                 methodDTO.id,
                 methodDTO.name,
                 proccesList,
-             //   methodDTO.processDTOList.stream().map(MethodAdapter::transformToProcess).collect(Collectors.toList()),
                 methodMappingList
-                //methodDTO.methodMappingDTOList.stream().map(MethodAdapter::transformToMethodMapping).collect(Collectors.toList())
                 );
     }
 
@@ -85,8 +79,6 @@ public class MethodAdapter {
 
     public static MethodMapping transformToMethodMapping(MethodMappingDTO methodMappingDTO) {
 
-//        List<ProcessActivity> processActivities = transformToProcessActivityList(  processDTO.processActivityDTOList );
-//        return new Process(null, processDTO.displayName, processDTO.processType, processDTO.followUP, processActivities);
 
         return  new MethodMapping(null,methodMappingDTO.name );
     }

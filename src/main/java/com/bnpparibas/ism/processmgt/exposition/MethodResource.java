@@ -22,18 +22,7 @@ public class MethodResource {
     }
     @RequestMapping(method = RequestMethod.GET, path = {"/methods/{methodId}"})
     public MethodDTO detailMethod(@PathVariable("methodId") Long methodId) {
-       // return MethodAdapter.adaptToMethodDTO(this.methodService.obtain(methodId));
 
-       /* RestTemplate restTemplate = new RestTemplate();
-
-        Long libraryId = methodId;
-
-        String fooResourceUrl    = "http://localhost:8080/libraries/"+ libraryId;
-        //
-        ResponseEntity<String> response   = restTemplate.getForEntity(fooResourceUrl , String.class);
-        //assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-
-        System.out.println(response); */
          return MethodAdapter.adaptToMethodDTO(this.methodService.obtain(methodId));
     }
 
@@ -56,7 +45,7 @@ public class MethodResource {
         return MethodAdapter.adaptToProcessListDTO(this.methodService.listAllProccessByMappedNameAndProcess(name,pname,ptype,pfollow));
 
     }
-//  call in front return this.http.get(`${this.baseUrl}/methods/${name}/ptype/${ptype}/pfollow/${pfollow}`)
+    // call in front : return this.http.get(`${this.baseUrl}/methods/${name}/ptype/${ptype}/pfollow/${pfollow}`)
     @RequestMapping(method = RequestMethod.GET, path = {"/methods/{name}/ptype/{ptype}/pfollow/{pfollow}"})
 
     public List<ProcessDTO> listProccessByMappedNameAndProcessTypeFollow  (@PathVariable("name") String name,
@@ -88,14 +77,14 @@ public class MethodResource {
     }
 
 
-// call in front  return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/addProcess`, processDTO);
+    // call in front: return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/addProcess`, processDTO);
     @RequestMapping(method = RequestMethod.POST, path = {"/methods/{methodId}/addProcess"})
     @ResponseStatus(HttpStatus.CREATED)
     public void addProcessToMethod(@PathVariable("methodId") Long methodId, @RequestBody  ProcessDTO processDTO) {
         this.methodService.addProcess(methodId, MethodAdapter.transformToProcess(processDTO));
 
     }
-// call in front return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/process/${processId}/addProcessActivity`, processActivityDTO);
+    //call in front:  return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/process/${processId}/addProcessActivity`, processActivityDTO);
     @RequestMapping(method = RequestMethod.POST, path = {"/methods/{methodId}/process/{processId}/addProcessActivity"})
     @ResponseStatus(HttpStatus.CREATED)
     public void addProcessActivityToMethod(@PathVariable("methodId") Long methodId, @PathVariable("processId") Long processId, @RequestBody  ProcessActivityDTO processActivityDTO) {
@@ -103,8 +92,7 @@ public class MethodResource {
         System.out.println("calling addProcessActivityToMethod");
 
     }
-    // call in front return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/process/${processID}/activity/${activityID}/addArtifact`, artifactDTO);
-
+    //call in front:  return  this.http.post<void>(`${this.baseUrl}/methods/${methodID}/process/${processID}/activity/${activityID}/addArtifact`, artifactDTO);
     @RequestMapping(method = RequestMethod.POST, path = {"/methods/{methodId}/process/{processId}/activity/{activityID}/addArtifact"})
     @ResponseStatus(HttpStatus.CREATED)
     public void addArtifactToMethod(@PathVariable("methodId") Long methodId, @PathVariable("processId") Long processId, @PathVariable("activityID") Long activityID, @RequestBody  ArtifactDTO artifactDTO) {
@@ -113,43 +101,15 @@ public class MethodResource {
 
     }
 
+       /* this commented code was used to test calling methodes from  other applications Ressources
+        RestTemplate restTemplate = new RestTemplate();
+        Long libraryId = methodId;
 
+        String fooResourceUrl    = "http://localhost:8080/libraries/"+ libraryId;
+        //
+        ResponseEntity<String> response   = restTemplate.getForEntity(fooResourceUrl , String.class);
+        //assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        System.out.println(response); */
 }
 
-/*
-@RestController
-public class MethodResource {
 
-    @Autowired
-    private LibraryService libraryService;
-
-    @RequestMapping(method = RequestMethod.POST, path = {"/libraries/"})
-    @ResponseStatus(HttpStatus.CREATED)
-    public Long createLibrary(@RequestBody LibraryDTO libraryDTO) {
-        return this.libraryService.create(LibraryAdapter.transformToLibrary(libraryDTO));
-    }
-
-    @RequestMapping(method = RequestMethod.GET, path = {"/libraries/{libraryId}"})
-    public LibraryDTO detailLibrary(@PathVariable("libraryId") Long libraryId) {
-        return LibraryAdapter.adaptToBookDTO(this.libraryService.obtain(libraryId));
-    }
-
-    @RequestMapping(method = RequestMethod.GET, path = {"/libraries/"})
-    public List<LibraryDTO> listAllLibrairies() {
-        return LibraryAdapter.adaptToLibraryDTO(this.libraryService.listAll());
-    }
-
-    @RequestMapping(method = RequestMethod.PUT, path = {"/libraries/{libraryId}"})
-    @ResponseStatus(HttpStatus.OK)
-    public void updateLibrary(@PathVariable("libraryId") Long libraryId, @RequestBody Library library) {
-        this.libraryService.update(libraryId, library);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE, path = {"/libraries/{libraryId}"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeBook(@PathVariable("libraryId") Long libraryId) {
-        this.libraryService.remove(libraryId);
-    }
-
-}
- */

@@ -21,8 +21,5 @@ public class ProcessActivityDTO {
         this.artifactDTOList = artifactDTOList;
     }
 
-/*    public ProcessActivityDTO(String name  , List<ArtifactDTO> artifactDTOList) {
-        this.name = name;
-        this.artifactDTOList = artifactDTOList;
-    }*/
+
 }

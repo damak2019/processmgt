@@ -31,8 +31,7 @@ public class ProcessActivityJPA {
         this.process = process;
     }
 
-    //cascade = CascadeType.ALL
-   // @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE, CascadeType.DETACH, CascadeType.REFRESH})
+
     @ManyToMany(  cascade = CascadeType.ALL)
     @JoinTable(
             name = "ACTIVITY_HAS_ARTIFACT",

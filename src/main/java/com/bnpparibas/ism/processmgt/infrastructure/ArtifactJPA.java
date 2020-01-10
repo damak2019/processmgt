@@ -15,17 +15,49 @@ import java.util.stream.Collectors;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@UUID")
 @Entity(name = "ARTIFACT")
 public class ArtifactJPA {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID",columnDefinition = "serial")
     private Long id;
+
     @Column(name = "TAG")
     private String tag;
+
     @Column(name = "NAME")
     private String name;
 
     @ManyToMany(mappedBy = "artifactJPAs")
     private Set<ProcessActivityJPA> processActivityJPAs;
+
+
+
+    public ArtifactJPA() {
+    }
+
+    // Needed to  create the  Infrastructure JPA Object from the  Domain object
+    public ArtifactJPA(Artifact artifact) {
+        this.id = artifact.getId();
+        this.tag = artifact.getTag();
+        this.name = artifact.getName();
+    }
+
+    // Needed to transform  Infrastructure JPA object to Domain Object
+    public Artifact toArtifact() {
+        //    Set<ProcessActivity> processActivities = fromActivityJPASetToActivitySet(this.processActivityJPAs) ;
+        return new Artifact(this.id, this.tag, this.name /*,processActivities*/);
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+    public String getTag() {
+        return tag;
+    }
+    public String getName() {
+        return name;
+    }
 
     public Set<ProcessActivityJPA> getProcessActivityJPAs() {
         if (processActivityJPAs ==null) {
@@ -33,52 +65,21 @@ public class ArtifactJPA {
         }
         return processActivityJPAs;
     }
-
     public void setProcessActivityJPAs(Set<ProcessActivityJPA> processActivityJPAs) {
         this.processActivityJPAs = processActivityJPAs;
     }
 
-    public ArtifactJPA() {
-    }
 
-    public ArtifactJPA(Artifact artifact) {
-        this.id = artifact.getId();
-        this.tag = artifact.getTag();
-        this.name = artifact.getName();
-      //  this.processActivityJPAs = fromActivitySetToActivityJPASet(artifact.getProcessActivities());
-
-    }
-
+    // Transform Domain Object List to Infrastructure JPA Object List
     private Set<ProcessActivityJPA> fromActivitySetToActivityJPASet(Set<ProcessActivity> processActivities) {
         return processActivities.stream().map(ProcessActivityJPA::new).collect(Collectors.toSet());
     }
 
-
-    public Artifact toArtifact() {
-    //    Set<ProcessActivity> processActivities = fromActivityJPASetToActivitySet(this.processActivityJPAs) ;
-        return new Artifact(this.id, this.tag, this.name /*,processActivities*/);
-    }
-
+    // Transform JPA Object List to Domain Object List
     private Set<ProcessActivity> fromActivityJPASetToActivitySet(Set<ProcessActivityJPA> processActivityJPAs) {
        return processActivityJPAs.stream().map(processActivityJPA -> processActivityJPA.toProcessActivity()).collect(Collectors.toSet());
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-   /* public Set<ProcessActivityJPA> getProcessActivityJPAs() {
-        return processActivityJPAs;
-    }*/
 
     @Override
     public boolean equals(Object o) {

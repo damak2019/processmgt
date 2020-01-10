@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
-/* This Class belonging to the Infrastructure layer implements the l'interface MethodRepository defined in the Domain layer
+/** This Class belonging to the Infrastructure layer implements the l'interface MethodRepository defined in the Domain layer
 / this allows the Inversion of Dependency */
 
 @Repository

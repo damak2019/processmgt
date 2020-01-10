@@ -4,6 +4,10 @@ import com.bnpparibas.ism.processmgt.domain.MethodMapping;
 
 import javax.persistence.*;
 
+/**
+ * This Class represent the JPA Entity for a MethodMapping
+ * */
+
 @Entity(name = "METHOD_MAPPING")
 public class MethodeMappingJPA {
 

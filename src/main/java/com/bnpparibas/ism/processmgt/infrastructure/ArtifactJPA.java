@@ -12,6 +12,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This Class represent the JPA Entity for an Artifact
+ * */
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@UUID")
 @Entity(name = "ARTIFACT")
 public class ArtifactJPA {

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This Class represent the JPA Entity for a Method
+ * */
+
 @Entity(name = "METHOD")
 public class MethodJPA {
 

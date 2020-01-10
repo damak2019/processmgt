@@ -2,8 +2,10 @@ package com.bnpparibas.ism.processmgt.exposition;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
 
+/**
+ * This class represents the Artifact in the exposition layer
+ * */
 public class ArtifactDTO {
 
     @JsonProperty

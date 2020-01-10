@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * This class represents the Method in the exposition layer
+ * */
+
 public class MethodDTO {
     @JsonProperty
     Long id;

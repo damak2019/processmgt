@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This Class represent the JPA Entity for a ProcessActivity
+ * */
+
 @Entity(name = "PROCESS")
 public class ProcessJPA {
     @Id

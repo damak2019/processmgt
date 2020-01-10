@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This class represents the Process in the exposition layer
+ * */
 public class ProcessDTO {
     @JsonProperty
     Long id;

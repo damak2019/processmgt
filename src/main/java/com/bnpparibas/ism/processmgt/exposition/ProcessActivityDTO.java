@@ -3,7 +3,9 @@ package com.bnpparibas.ism.processmgt.exposition;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-
+/**
+ * This class represents the ProcessActivity in the exposition layer
+ * */
 public class ProcessActivityDTO {
     @JsonProperty
     Long id;

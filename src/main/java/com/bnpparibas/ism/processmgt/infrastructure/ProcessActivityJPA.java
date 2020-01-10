@@ -9,6 +9,10 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This Class represent the JPA Entity for a ProcessActivity
+ * */
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@UUID")
 @Entity(name = "PROCESS_ACTIVITY")
 public class ProcessActivityJPA {

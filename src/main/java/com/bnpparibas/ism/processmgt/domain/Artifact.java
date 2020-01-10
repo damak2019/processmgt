@@ -1,6 +1,8 @@
 package com.bnpparibas.ism.processmgt.domain;
 
-
+/**
+This Class describe an Artifac which is peace of work that should be delivered as input for an activity of a process
+*/
 
 public class Artifact {
     private Long id;

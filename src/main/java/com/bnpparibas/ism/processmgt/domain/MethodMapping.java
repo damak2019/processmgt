@@ -1,5 +1,8 @@
 package com.bnpparibas.ism.processmgt.domain;
 
+/**
+ * A MethodMapping contain a name to map a method
+ */
 public class MethodMapping {
     private Long id;
     private String name;

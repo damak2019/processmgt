@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * A Process is defined by a display name , a type and a Follow Up (a way that a project which use that process should be
+ * followed up and controlled by Architects and Transvertial teams) .
+ * A process has a list of Activities that have to be done by any project which follow this process
+ * */
+
 public class Process {
     private Long id;
     private String displayName;
@@ -16,6 +22,7 @@ public class Process {
     public Process() {
     }
 
+    // Creating the process
     public Process(Long id, String displayName, ProcessType processType, FollowUP followUP, List<ProcessActivity> processActivities) {
         this.id = id;
         this.displayName = displayName;
@@ -23,6 +30,8 @@ public class Process {
         this.followUP = followUP;
         this.processActivities = processActivities;
     }
+
+    // Updating the process
      public void update (Process  processWithNewInformation){
         // this.id = methodWithNewInformation.getId();
         this.displayName = processWithNewInformation.getDisplayName();

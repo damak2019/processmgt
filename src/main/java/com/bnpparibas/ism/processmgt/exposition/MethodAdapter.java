@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/* This Class is used to  transfrom Domain layer Objects to Exposition layer  Objects (DTO)
+   and transform Back the exposition Layer objects to the Domain objects */
+
 public class MethodAdapter {
     private MethodAdapter() {
     }

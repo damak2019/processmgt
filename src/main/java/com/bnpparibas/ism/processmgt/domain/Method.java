@@ -4,13 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The Method is the main object in the Domain. It is the candidate to be an agregate in DDD approch
+ * it is defined by a name and several mapping name
+ * It has alos several Process
+ * */
+
 public class Method {
 
     private Long id;
     private String name;
 
+    // List of Process
     private List<Process> processes = new ArrayList<>();
 
+    // List of mapping names for the method
     private List<MethodMapping> methodMappings = new ArrayList<>();
 
     public Method() {
